@@ -6,13 +6,13 @@ function getDataByApi() {
       }
     })
     .then(function(value) {
+      //Mes donnees recup sont dans value
         document.getElementById("resultat2")
         .innerText = value.records[0].fields.denomination;
 
         document.getElementById("resultat3")
         .innerText = "La vitesse moyenne est de " + value.records[0].fields.averagevehiclespeed + " km";          
-        //value correspond aux data recup, ici un json
-        //je reçois un tableau d'enregistrement, à l'emplacement 0 je recup le datasetid
+        
     })
     .catch(function(err) {
       // Une erreur est survenue
