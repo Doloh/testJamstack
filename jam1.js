@@ -1,5 +1,5 @@
 //coordonnees de base de la map + zoom de base
-var mymap = L.map('leafset-map').setView([48.11, -1.68], 13);
+var mymap = L.map('leafset-map').setView([48.11, -1.68], 11);
 
 //ne pas modifier les variable, sauf l'access totm (à recup sur mapbox)
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -12,16 +12,17 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 //ajouter un cercle
-var circle = L.circle([48.1161905395, -1.71854551066], {
+/*var circle = L.circle([48.1161905395, -1.71854551066], {
   color: 'red',
   fillColor: '#f03',
   fillOpacity: 0.5,
   radius: 20
-}).addTo(mymap);
+}).addTo(mymap);*/
+//
 
-//Fonction pour recup des donnees via une api externe
+//Fonction pour recup des donnees via une api externe (ici recuperation des 1000 plus recentes)
 function getDataByApi() {
-    fetch("https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-du-trafic-en-temps-reel&q=&sort=averagevehiclespeed&facet=denomination")
+    fetch("https://data.rennesmetropole.fr/api/records/1.0/search/?dataset=etat-du-trafic-en-temps-reel&q=&rows=1000&sort=averagevehiclespeed&facet=denomination")
     .then(function(res) {
       if (res.ok) {
         return res.json();
@@ -30,29 +31,45 @@ function getDataByApi() {
     .then(function(value) {
       //Mes donnees recup sont dans value
      /* document.getElementById("resultat")
-      .innerText = value.records[0].fields.denomination;
-
-      document.getElementById("resultat2")
-      .innerText = value.records[0].fields.denomination;
-
-      document.getElementById("resultat3")
-      .innerText = "La vitesse moyenne est de " + value.records[0].fields.averagevehiclespeed + " km";          
-      */  
+      .innerText = value.records[0].fields.denomination; */
      
       //pour chaque enregistrement, je recupere la position
       //je trace un cercle sur la map correspondant à la position récupérée
+      var position;
+      var traficStatus;
+
       value.records.forEach(record => {
-        var position = record.fields.geo_point_2d.join(",");
-
-        document.getElementById("resultat2")
-        .innerText = position;
-
-        var circle = L.circle([48.11, -1.68], {
-          color: 'blue',
-          fillColor: '#f03',
-          fillOpacity: 0.5,
-          radius: 50
-        }).addTo(mymap);
+        position = record.fields.geo_point_2d;
+        traficStatus = record.fields.trafficstatus;
+        console.log(record);
+        
+        //selon le trafic, on trace un cercle d'une couleur differente
+        if(position != null){
+          if(traficStatus == "freeFlow"){
+            var circle = L.circle(position, {
+              color: 'green',
+              fillColor: '',
+              fillOpacity: 0.3,
+              radius: 50
+            }).addTo(mymap);
+          } else if(traficStatus == "heavy") {
+            var circle = L.circle(position, {
+              color: 'orange',
+              fillColor: '',
+              fillOpacity: 0.3,
+              radius: 50
+            }).addTo(mymap);
+          } else if (traficStatus == "congested") {
+            var circle = L.circle(position, {
+              color: 'red',
+              fillColor: '',
+              fillOpacity: 0.3,
+              radius: 50
+            }).addTo(mymap);
+          } else {
+            console.log("pas trouvé le trafic status");
+          }
+        }
       });
      
     })
@@ -64,7 +81,7 @@ function getDataByApi() {
   
   //On recupere le bouton et on declenche la fonction de recup de donnees au clic
   document
-    .getElementById("C'est ici que tout commence")
+    .getElementById("refresh")
     .addEventListener("click", getDataByApi);
 
 
