@@ -1,5 +1,6 @@
 //coordonnees de base de la map + zoom de base
 var mymap = L.map('leafset-map').setView([48.11, -1.68], 11);
+var mapCircles = [];
 
 //ne pas modifier les variable, sauf l'access totem (à recup sur mapbox)
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -10,6 +11,19 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZG9sb2dvdGhvIiwiYSI6ImNrcmVwc2RyZzF1NzAydnF1YzVibTU3enMifQ.Ev-BfVVvxUaKwsXm8iFs4A'
 }).addTo(mymap);
+
+function addCircleOnMapForEachRecord(data) {
+  console.log(data);
+}
+
+//Nettoyage de la map grace aux coordonnees stockés dans le tableau, puis on vide le tableau
+function clearMap() {  
+  for(var i = 0; i < mapCircles.length; i++)
+  {
+    mymap.removeLayer(mapCircles[i]);
+  }
+  mapCircles.length = 0;
+}
 
 //Fonction pour recup des donnees via une api externe (ici recuperation des xxx plus recentes)
 function getDataByApi(color1, color2, color3) {
@@ -25,15 +39,18 @@ function getDataByApi(color1, color2, color3) {
      /* document.getElementById("resultat")
       .innerText = value.records[0].fields.denomination; */
      
-      //pour chaque enregistrement, je recupere la position
-      //je trace un cercle sur la map correspondant à la position récupérée
       var position;
       var traficStatus;
-
+      
+      //Nettoyage de la map puis...
+      //pour chaque enregistrement, je recupere la position
+      //je trace un cercle sur la map correspondant à la position récupérée
+      clearMap();
       value.records.forEach(record => {
         position = record.fields.geo_point_2d;
         traficStatus = record.fields.trafficstatus;
         console.log(record);
+        addCircleOnMapForEachRecord("add circle");
         
         //selon le trafic, on trace un cercle d'une couleur differente
         if(position != null){
@@ -44,6 +61,9 @@ function getDataByApi(color1, color2, color3) {
               fillOpacity: 0.3,
               radius: 50
             }).addTo(mymap);
+            mapCircles.push(circle);
+            console.log(mapCircles);
+
           } else if(traficStatus == "heavy") {
             var circle = L.circle(position, {
               color: color2,
@@ -51,6 +71,8 @@ function getDataByApi(color1, color2, color3) {
               fillOpacity: 0.3,
               radius: 50
             }).addTo(mymap);
+            mapCircles.push(circle);
+
           } else if (traficStatus == "congested") {
             var circle = L.circle(position, {
               color: color3,
@@ -58,6 +80,8 @@ function getDataByApi(color1, color2, color3) {
               fillOpacity: 0.3,
               radius: 50
             }).addTo(mymap);
+            mapCircles.push(circle);
+
           } else {
             console.log("pas trouvé le trafic status");
           }
@@ -71,4 +95,5 @@ function getDataByApi(color1, color2, color3) {
     });
   }
 
-  //clear la map à chaque refresh ??
+ 
+
