@@ -11,22 +11,20 @@
     crossorigin=""/>
     <!-- Lien vers mon css-->
     <link rel="stylesheet" href="jam1.css"/>
-    <!-- Lien vers le JS de leafaset-->
+    <!-- Lien vers le JS de leafset-->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
-
+    
     <title>jam1 TEST</title>
 </head>
 <body>
-    <div><button id="refresh">Rafraichir</button></div>
+    <div><button onclick="getDataByApi('green','orange','red')">Mode classique</button></div>
+    <div><button onclick="getDataByApi('blue','yellow','red')"">Mode Daltonien</button></div>
     <div id="resultat"></div>   
-    <br>
-    <div id="leafset-map"></div>
-
-    <!--   48.1161905395, -1.71854551066  -->
-    
+    <div id="leafset-map"></div>    
 </body>
-</html>
+
 
 <script type="text/javascript" src="jam1.js"></script>
+</html>
