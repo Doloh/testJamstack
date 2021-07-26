@@ -95,5 +95,5 @@ function getDataByApi(color1, color2, color3) {
     });
   }
 
- 
+  getDataByApi('green','orange','red') 
 
