@@ -119,5 +119,9 @@ function getDataByApi(color1, color2, color3) {
 //Affichage dés le lancement de la page
 getDataByApi(localStorage.getItem("color1"), localStorage.getItem("color2"), localStorage.getItem("color3")) 
 
+
+
+//Ajouter popup sur cercle pour afficher info rue etc
+//ajouter gestion enervement utilisateur
             
 
