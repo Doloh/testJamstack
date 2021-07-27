@@ -43,8 +43,10 @@ button:hover {
 
 #legende{
     display: flex;
+    justify-content: center;
     margin-top: 10px;
     margin-bottom: 10px;
+    padding-left: 25px;
 }
 
 .legende-content{
@@ -68,15 +70,22 @@ button:hover {
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color: white;
 }
 
 #img-legend-1 {
     background-color: green;
+    flex-shrink: 0;
 }
 #img-legend-2 {
     background-color: orange;
+    flex-shrink: 0;
+
 }
 #img-legend-3 {
     background-color: red;
+    flex-shrink: 0;
+}
+
+.test {
+    color: blanchedalmond;
 }
