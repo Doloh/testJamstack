@@ -124,4 +124,4 @@ getDataByApi(localStorage.getItem("color1"), localStorage.getItem("color2"), loc
 //Ajouter popup sur cercle pour afficher info rue etc
 //ajouter gestion enervement utilisateur
             
-
+setTimeout(function(){ map.invalidateSize()}, 500);
