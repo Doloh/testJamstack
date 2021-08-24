@@ -11,10 +11,6 @@
     crossorigin=""/>
     <!-- Lien vers mon css-->
     <link rel="stylesheet" href="jam1.css"/>
-    <!-- Lien vers le JS de leafset-->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
     
     <title>jam1 TEST</title>
 </head>
@@ -24,20 +20,25 @@
         <div class="legende-content"><div id="img-legend-2"></div><p class="txt-legende">Circulation ralentie</p></div>
         <div class="legende-content"><div id="img-legend-3"></div><p class="txt-legende">Circulation bloquée</p></div>
     </div>
-
+    
     <div id="map-content">
         <div id="leafset-map"></div>    
     </div>
-
+    
     <div id="button-content">
         <div><button onclick="getDataByApi('green','orange','red')">Mode classique</button></div>
         <div><button onclick="getDataByApi('blue','yellow','red')">Mode Daltonien</button></div>
         <div><button onclick="clearMap()">Clear</button></div>
         <div id="resultat"></div>  
     </div>   
-
-
+    
+    
+    <!-- Lien vers le JS de leafset-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <!-- mon JS -->
+    <script src="jam1.js"></script>
 </body>
 
-<script src="jam1.js"></script>
 </html>

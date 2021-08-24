@@ -33,7 +33,6 @@ function clearMap() {
 
 //Fonction pour recup des donnees via une api externe (ici recuperation des xxx plus recentes)
 //prend en argument 3 couleur (1 > fluide, 2 ralenti, 3 bloqué)
-//prend en argument un boolean (true = mode daltonien)
 function getDataByApi(color1, color2, color3) {
   //On adapte la couleur de la legende
   document.getElementById("img-legend-1").style.backgroundColor = color1;
@@ -120,8 +119,7 @@ function getDataByApi(color1, color2, color3) {
 getDataByApi(localStorage.getItem("color1"), localStorage.getItem("color2"), localStorage.getItem("color3")) 
 
 
-
+//POSSIBLE (look quickstart leafset)
 //Ajouter popup sur cercle pour afficher info rue etc
-//ajouter gestion enervement utilisateur
-            
-setTimeout(function(){ map.invalidateSize()}, 500);
+
+         
